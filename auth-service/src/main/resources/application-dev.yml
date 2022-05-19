@@ -1,0 +1,36 @@
+spring:
+  # data base configuration
+  datasource:
+    url: jdbc:mysql://localhost:3306/microservice
+    username: root
+    password: Root@46323274
+    driverClass: com.jc.jdbc.Driver
+  # jpa hibernate configuration
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL57Dialect
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+server:
+  port: 8083
+
+eureka:
+  username: ${eureka-username}
+  password: ${eureka-password}
+  client:
+    service-url:
+      defaultZone: http://${eureka.username}:${eureka.password}@localhost:8761/eureka/
+  fetch-registry: true
+  register-with-eureka: true
+
+jwt:
+  secret: jwt-secret #should be passed from vm arguments
+  token:
+    validity: 600000 #10 minutes
+  refresh-token:
+    validity: 1200000 #20 minutes
+
