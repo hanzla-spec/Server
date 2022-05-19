@@ -1,9 +1,11 @@
 package app.question.service;
 
 import app.question.entity.Question;
+import app.question.entity.Tags;
 import app.question.entity.VQuestion;
 import app.question.model.QuestionDTO;
 import app.question.repository.QuestionRepository;
+import app.question.repository.TagRepository;
 import app.question.repository.VQuestionRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -23,6 +26,9 @@ public class QuestionService {
 
     @Autowired
     private VQuestionRepository vQuestionRepository;
+
+    @Autowired
+    private TagRepository tagRepository;
 
 
     public String postQuestion(QuestionDTO questionDTO){
@@ -40,7 +46,7 @@ public class QuestionService {
         Long currentTimeMillis = System.currentTimeMillis(); // by default current date is set
         question.setAskedAt(currentTimeMillis);
         question.setIsEdited("false");
-        question.setEditedAt(null);
+        question.setEditedAt(currentTimeMillis);
         questionRepository.save(question);
 
         return questionId;
@@ -48,5 +54,12 @@ public class QuestionService {
 
     public List<VQuestion> getAllVQuestions(){
         return vQuestionRepository.findAll();
+    }
+
+    public Optional<Tags> getTags(){
+        return tagRepository.findById("12345");
+    }
+    public void postTag(Tags tag){
+        tagRepository.save(tag);
     }
 }

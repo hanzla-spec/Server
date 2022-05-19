@@ -1,6 +1,7 @@
 package app.question.controller;
 
 import app.question.entity.Question;
+import app.question.entity.Tags;
 import app.question.entity.VQuestion;
 import app.question.model.QuestionDTO;
 import app.question.model.ResponseDetails;
@@ -18,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "api/v1/question")
@@ -48,5 +50,23 @@ public class QuestionController {
         log.info("v questions retrieved successfully");
         return new ResponseEntity<>(vQuestionDTOS, new HttpHeaders() , HttpStatus.OK);
     }
+
+    @GetMapping(value = "/allTags")
+    @ApiOperation(value = "Get all tags")
+    private ResponseEntity<?> getAllTags(){
+        log.info("Performing operation to get All tags");
+        ResponseDetails responseDetails = new ResponseDetails();
+        Tags tags = null;
+        Optional<Tags> tagsDB = questionService.getTags();
+        if(!tagsDB.isPresent()){
+            responseDetails.setMessage_code(-1);
+            responseDetails.setMessage("No tags present");
+            return new ResponseEntity<>(responseDetails, new HttpHeaders(), HttpStatus.FORBIDDEN);
+        }
+        tags = tagsDB.get();
+
+        return new ResponseEntity<>(tags, new HttpHeaders(), HttpStatus.OK);
+    }
+
 
 }
