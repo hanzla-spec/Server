@@ -1,0 +1,42 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+
+  security:
+    user:
+      name: ${swagger-username}
+      password: ${swagger-password}
+
+
+eureka:
+  username: ${eureka-username}
+  password: ${eureka-password}
+  client:
+    service-url:
+      defaultZone: http://${eureka.username}:${eureka.password}@localhost:8761/eureka
+  fetch-registry: true
+  register-with-eureka: true
+
+#swagger properties
+
+documentation:
+  baseurl: http://localhost
+  swagger:
+    services:
+      - name: question-service
+        url: ${documentation.baseurl}:8082/v2/api-docs
+        version: 1.0
+      - name: auth-service
+        url: ${documentation.baseurl}:8083/v2/api-docs
+        version: 1.0
+
+jwt:
+  secret: jwt-secret # should be passed from vm arguments
+  token:
+    validity: 600000 #10 minutes
