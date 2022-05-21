@@ -180,7 +180,7 @@ public class AuthController {
 
     @GetMapping(value = "profile/{userId}")
     @ApiOperation(value = "Getting profile from userId")
-    public ResponseEntity<?> getProfileFromUsername(@PathVariable("userId") String userId){
+    public ResponseEntity<?> getProfileFromUsername(@PathVariable(value = "userId") String userId){
 
         log.info("Performing operation to fetch profile from userId");
         ResponseDetails responseDetails = new ResponseDetails();

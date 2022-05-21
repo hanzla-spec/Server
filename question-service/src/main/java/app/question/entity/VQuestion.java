@@ -9,6 +9,7 @@ import org.hibernate.annotations.Subselect;
 import org.hibernate.annotations.Synchronize;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Getter
@@ -22,7 +23,7 @@ import javax.persistence.*;
         "from question q left join " +
         "profile p on q.user_id = p.user_id ")
 @Synchronize({ "QUESTION", "PROFILE" })
-public class VQuestion {
+public class VQuestion implements Serializable {
 
     @Id
     @Column(name = "QUESTION_ID")
