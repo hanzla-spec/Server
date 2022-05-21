@@ -27,7 +27,7 @@ public class PrivateAuthController {
     @ApiOperation(value = "Get userId from username")
     public ResponseEntity<?> getIdByUsername(@RequestHeader(value = "username" ,required = true)String h_username
                                              ,@RequestHeader(value = "role" , required = true) String h_role,
-                                             @PathVariable("username") String username){
+                                             @PathVariable(value = "username") String username){
         log.info("Performing operation for getting user id by username");
         ResponseDetails responseDetails = new ResponseDetails();
 

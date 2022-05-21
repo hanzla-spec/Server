@@ -22,6 +22,9 @@ public class UserAnswerRel implements Serializable {
     @Column(name = "ANSWER_ID", nullable = false)
     private String answerId;
 
+    @Column(name = "IS_ANSWERED")
+    private String isAnswered;
+
     @Column(name = "IS_VOTED")
     private String isVoted;
 

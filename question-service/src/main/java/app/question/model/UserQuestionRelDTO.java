@@ -13,7 +13,6 @@ public class UserQuestionRelDTO implements Serializable {
     private String relId;
     private String userId;
     private String questionId;
-    private String isAnswered;
+    private String isAsked;
     private String isVoted;
-    private String answerId;
 }

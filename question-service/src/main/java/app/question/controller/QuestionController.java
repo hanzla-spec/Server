@@ -3,7 +3,6 @@ package app.question.controller;
 import app.question.entity.Question;
 import app.question.entity.Tags;
 import app.question.entity.VQuestion;
-import app.question.model.QuestionDTO;
 import app.question.model.ResponseDetails;
 import app.question.model.VQuestionDTO;
 import app.question.service.QuestionService;
@@ -68,5 +67,61 @@ public class QuestionController {
         return new ResponseEntity<>(tags, new HttpHeaders(), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/get/{questionId}")
+    @ApiOperation(value = "Get a question for question ID")
+    private ResponseEntity<?> getVQuestionForQuestionId(@PathVariable(value = "questionId") String questionId){
+        log.info("Performing operation to get a question by question id");
+        ResponseDetails responseDetails = new ResponseDetails();
+        VQuestion question = null;
+        if(questionId == null || questionId.trim().equals("")){
+            responseDetails.setMessage("Null values not accepted");
+            responseDetails.setMessage_code(-1);
+            return new ResponseEntity<>(responseDetails, new HttpHeaders(), HttpStatus.FORBIDDEN);
+        }else{
+
+            Optional<VQuestion> vQuestionDB = questionService.getVQuestionByQuestionId(questionId);
+            if(!vQuestionDB.isPresent()){
+                responseDetails.setMessage_code(-1);
+                responseDetails.setMessage("No question present with the question Id  "+ questionId);
+                return new ResponseEntity<>(responseDetails, new HttpHeaders(), HttpStatus.FORBIDDEN);
+            }else{
+                question = vQuestionDB.get();
+            }
+        }
+
+        log.info("question fetched successfully");
+
+        return new ResponseEntity<>(question ,new HttpHeaders(), HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "To increase no of views")
+    @PutMapping(value = "/upView/{questionId}")
+    private ResponseEntity<?> increaseViewOfQuestion(@PathVariable(value = "questionId") String questionId){
+
+        log.info("Performing operation to increase the count of view");
+        ResponseDetails responseDetails = new ResponseDetails();
+
+        if(questionId == null || questionId.trim().equals("")){
+            responseDetails.setMessage("Null values not accepted");
+            responseDetails.setMessage_code(-1);
+            return new ResponseEntity<>(responseDetails, new HttpHeaders(), HttpStatus.FORBIDDEN);
+        }else{
+            Optional<Question> questionDB = questionService.getQuestionByQuestionId(questionId);
+            if(!questionDB.isPresent()){
+                responseDetails.setMessage_code(-1);
+                responseDetails.setMessage("No question present with the question Id  "+ questionId);
+                return new ResponseEntity<>(responseDetails, new HttpHeaders(), HttpStatus.FORBIDDEN);
+            }else{
+                Question question = questionDB.get();
+                question.setNoOfViews(question.getNoOfViews()+1);
+                responseDetails.setMessage("view count increased successfully");
+                responseDetails.setMessage_code(1);
+                questionService.updateQuestion(question);
+            }
+        }
+        log.info("view count increased successfully");
+
+        return new ResponseEntity<>(responseDetails ,new HttpHeaders(), HttpStatus.OK);
+    }
 
 }

@@ -7,12 +7,13 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class VQuestionDTO {
+public class VQuestionDTO implements Serializable {
 
     private String questionId;
     private String title;

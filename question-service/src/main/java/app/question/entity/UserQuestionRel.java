@@ -22,12 +22,9 @@ public class UserQuestionRel implements Serializable {
     @Column(name = "QUESTION_ID", nullable = false)
     private String questionId;
 
-    @Column(name = "IS_ANSWERED")
-    private String isAnswered;
+    @Column(name = "IS_ASKED")
+    private String isAsked;
 
     @Column(name = "IS_VOTED")
     private String isVoted;
-
-    @Column(name = "ANSWER_ID")
-    private String answerId;
 }
