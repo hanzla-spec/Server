@@ -34,7 +34,7 @@ public class AnswerController {
         List<VAnswer> answerList = answerService.getAnswersOfQuestion(questionId);
         if(answerList.isEmpty()){
             responseDetails.setMessage_code(-1);
-            responseDetails.setMessage("NO ANSWERS FOUND");
+            responseDetails.setMessage("No answers found");
             return new ResponseEntity<>(responseDetails, new HttpHeaders(), HttpStatus.FORBIDDEN);
         }
         return new ResponseEntity<>(answerList, new HttpHeaders(), HttpStatus.OK);
