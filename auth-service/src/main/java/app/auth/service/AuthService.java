@@ -32,6 +32,7 @@ public class AuthService {
         user.setUsername(userDTO.getUsername());
         user.setPassword(userDTO.getPassword());
         user.setRole("USER"); // by default all users has a role of USER
+        user.setIsVerified("false"); //default
         authRepository.save(user);
 
         log.info("user is registered");
@@ -64,6 +65,10 @@ public class AuthService {
 
     public Optional<Profile> getProfileFromUserId(String userId){
         return profileRepository.findProfileFromUserId(userId);
+    }
+
+    public void updateUser(User user){
+        authRepository.save(user);
     }
 
 }

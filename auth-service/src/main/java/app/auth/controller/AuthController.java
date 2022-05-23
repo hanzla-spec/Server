@@ -41,6 +41,7 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+
     @PostMapping("register")
     @ApiOperation(value = "Registers a user")
     public ResponseEntity<?> register(@RequestBody UserDTO userDTO){
@@ -114,6 +115,7 @@ public class AuthController {
                     response.setRefresh_token(refresh_token);
                     response.setExpiresInMillis(tokenValidity);
                     response.setUserId(user.getId());
+                    response.setIsVerified(user.getIsVerified());
                 }
             }else{
                 responseDetails.setMessage_code(-1);

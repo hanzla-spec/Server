@@ -15,6 +15,19 @@ spring:
       ddl-auto: update
     show-sql: false
 
+  #Email configuration
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: findall.message.service@gmail.com
+    password: ${email-app-password}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 server:
   port: 8083
 
@@ -33,4 +46,8 @@ jwt:
     validity: 600000 #10 minutes
   refresh-token:
     validity: 1200000 #20 minutes
+
+
+#Email
+
 
