@@ -19,7 +19,7 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: findall.message.service@gmail.com
+    username: ${email-app-name}
     password: ${email-app-password}
     properties:
       mail:
@@ -46,8 +46,4 @@ jwt:
     validity: 600000 #10 minutes
   refresh-token:
     validity: 1200000 #20 minutes
-
-
-#Email
-
 

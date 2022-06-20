@@ -3,7 +3,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/microservice
     username: root
-    password: Root@46323274
+    password: ${database-password}
     driverClass: com.jc.jdbc.Driver
   # jpa hibernate configuration
   jpa:
@@ -48,6 +48,7 @@ jwt:
     validity: 1200000 #20 minutes
 
 
-#Email
-
+logging:
+  level:
+    root: OFF
 

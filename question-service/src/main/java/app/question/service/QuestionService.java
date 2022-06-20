@@ -104,5 +104,4 @@ public class QuestionService {
     public void updateUserQuestionRel(UserQuestionRel userQuestionRel) {
         userQuestionRelRepository.save(userQuestionRel);
     }
-
 }

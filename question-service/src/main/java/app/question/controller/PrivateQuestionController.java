@@ -152,4 +152,40 @@ public class PrivateQuestionController {
         return new ResponseEntity<>(responseDetails ,new HttpHeaders(), HttpStatus.OK);
     }
 
+
+    @ApiOperation(value = "To edit question")
+    @PutMapping(value = "/edit")
+    public ResponseEntity<?> editQuestion(@RequestHeader(value = "username", required = true)String h_username,
+                                          @RequestHeader(value = "role", required = true) String h_role,
+                                          @RequestBody(required = true) QuestionDTO questionDTO){
+
+        log.info("Performing operation to edit a question");
+        ResponseDetails responseDetails = new ResponseDetails();
+
+        if(questionDTO == null || questionDTO.getBody()==null || questionDTO.getTitle()==null ||questionDTO.getUserId()==null){
+            responseDetails.setMessage_code(-1);
+            responseDetails.setMessage("Null request body not accepted");
+            return new ResponseEntity<>(responseDetails, new HttpHeaders(), HttpStatus.FORBIDDEN);
+        }
+
+        Optional<Question> questionDB = questionService.getQuestionByQuestionId(questionDTO.getQuestionId());
+        if(!questionDB.isPresent()){
+            responseDetails.setMessage("question is not present with this question id");
+            responseDetails.setMessage_code(-1);
+            return new ResponseEntity<>(responseDetails, new HttpHeaders(), HttpStatus.FORBIDDEN);
+        }else{
+            questionDTO.setEditedAt(System.currentTimeMillis());
+            questionDTO.setIsEdited("true");
+            ModelMapper mapper = new ModelMapper();
+            Question question = mapper.map(questionDTO , new TypeToken<Question>(){}.getType());
+            questionService.updateQuestion(question);
+            responseDetails.setMessage_code(1);
+            responseDetails.setMessage(questionDTO.getQuestionId());
+        }
+
+        log.info("Question edited successfully");
+
+        return new ResponseEntity<>(responseDetails, new HttpHeaders() , HttpStatus.OK);
+    }
+
 }
