@@ -129,4 +129,39 @@ public class PrivateAnswerController {
         return new ResponseEntity<>(responseDetails ,new HttpHeaders(), HttpStatus.OK);
     }
 
+
+
+    @PutMapping(value = "/edit")
+    @ApiOperation(value = "Edit answer for question")
+    public ResponseEntity<?> editAnswerForQuestion(@RequestHeader(value = "username", required = true)String h_username,
+                                                   @RequestHeader(value = "role", required = true) String h_role,
+                                                   @RequestBody AnswerDTO answerDTO){
+
+        log.info("Performing operation for editing an answer to question");
+        ResponseDetails responseDetails = new ResponseDetails();
+
+        if(answerDTO == null || answerDTO.getBody()==null){
+            responseDetails.setMessage_code(-1);
+            responseDetails.setMessage("Null value not allowed");
+            return new ResponseEntity<>(responseDetails, new HttpHeaders(), HttpStatus.FORBIDDEN);
+        }else{
+
+            Optional<Answer> answerDB = answerService.getAnswerByAnswerId(answerDTO.getAnswerId());
+            if(!answerDB.isPresent()){
+                responseDetails.setMessage_code(-1);
+                responseDetails.setMessage("No answer present with the answer Id  "+ answerDTO.getAnswerId());
+                return new ResponseEntity<>(responseDetails, new HttpHeaders(), HttpStatus.FORBIDDEN);
+            }else {
+                answerDTO.setIsEdited("true");
+                answerDTO.setEditedAt(System.currentTimeMillis());
+                Answer answer = new ModelMapper().map(answerDTO, new TypeToken<Answer>(){}.getType());
+                answerService.updateAnswer(answer);
+                responseDetails.setMessage_code(1);
+                responseDetails.setMessage(answerDTO.getAnswerId());
+            }
+        }
+        log.info("answer edited successfully");
+        return new ResponseEntity<>(responseDetails, new HttpHeaders(), HttpStatus.OK);
+    }
+
 }

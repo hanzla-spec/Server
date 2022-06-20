@@ -3,7 +3,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/microservice
     username: root
-    password: Root@46323274
+    password: ${database-password}
     driverClass: com.jc.jdbc.Driver
   # jpa hibernate configuration
   jpa:
@@ -14,6 +14,19 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: false
+
+  #Email configuration
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: findall.message.service@gmail.com
+    password: ${email-app-password}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 server:
   port: 8083
@@ -33,4 +46,9 @@ jwt:
     validity: 600000 #10 minutes
   refresh-token:
     validity: 1200000 #20 minutes
+
+
+logging:
+  level:
+    root: OFF
 

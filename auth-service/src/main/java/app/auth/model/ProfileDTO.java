@@ -1,7 +1,6 @@
 package app.auth.model;
 
 import lombok.*;
-
 import java.io.Serializable;
 
 @AllArgsConstructor
@@ -20,4 +19,5 @@ public class ProfileDTO implements Serializable {
     private String badge;
     private String website;
     private String achievements;
+
 }

@@ -24,4 +24,7 @@ public class User implements Serializable {
 
     @Column(name = "ROLE", nullable = false)
     private String role;
+
+    @Column(name = "IS_VERIFIED", columnDefinition = "varchar(6) default 'false'")
+    private String isVerified;
 }

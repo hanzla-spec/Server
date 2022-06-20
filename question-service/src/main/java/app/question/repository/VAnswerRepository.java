@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface VAnswerRepository extends JpaRepository<VAnswer, String> {
 
-    List<VAnswer> findByQuestionId(String questionId);
+    List<VAnswer> findByQuestionIdOrderByNoOfVotesDesc(String questionId);
 }

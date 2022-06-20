@@ -65,7 +65,7 @@ public class AnswerService {
 
 
     public List<VAnswer> getAnswersOfQuestion(String questionId){
-        return vAnswerRepository.findByQuestionId(questionId);
+        return vAnswerRepository.findByQuestionIdOrderByNoOfVotesDesc(questionId);
     }
 
     public Optional<Answer> getAnswerByAnswerId(String answerId) {

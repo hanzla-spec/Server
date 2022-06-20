@@ -16,5 +16,6 @@ public class JwtResponse implements Serializable {
     private String refresh_token;
     private Long expiresInMillis;
     private String userId;
+    private String isVerified;
 
 }
